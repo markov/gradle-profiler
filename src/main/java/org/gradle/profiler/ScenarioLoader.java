@@ -24,6 +24,10 @@ class ScenarioLoader {
     private static final String WARM_UP_COUNT = "warm-ups";
     private static final String APPLY_ABI_CHANGE_TO = "apply-abi-change-to";
     private static final String APPLY_NON_ABI_CHANGE_TO = "apply-non-abi-change-to";
+    private static final String APPLY_ABI_CHANGE_TO_KOTLIN_SINGLE = "apply-abi-change-to-kotlin-single";
+    private static final String APPLY_NON_ABI_CHANGE_TO_KOTLIN_SINGLE = "apply-non-abi-change-to-kotlin-single";
+    private static final String APPLY_ABI_CHANGE_TO_KOTLIN_MULTI = "apply-abi-change-to-kotlin-multi";
+    private static final String APPLY_NON_ABI_CHANGE_TO_KOTLIN_MULTI = "apply-non-abi-change-to-kotlin-multi";
     private static final String APPLY_ANDROID_RESOURCE_CHANGE_TO = "apply-android-resource-change-to";
     private static final String APPLY_ANDROID_RESOURCE_VALUE_CHANGE_TO = "apply-android-resource-value-change-to";
     private static final String APPLY_PROPERTY_RESOURCE_CHANGE_TO = "apply-property-resource-change-to";
@@ -34,7 +38,13 @@ class ScenarioLoader {
     private static final String TYPE = "type";
 
     private static final List<String> ALL_SCENARIO_KEYS = Arrays.asList(
-        VERSIONS, TASKS, CLEANUP_TASKS, GRADLE_ARGS, RUN_USING, SYSTEM_PROPERTIES, WARM_UP_COUNT, APPLY_ABI_CHANGE_TO, APPLY_NON_ABI_CHANGE_TO, APPLY_ANDROID_RESOURCE_CHANGE_TO, APPLY_ANDROID_RESOURCE_VALUE_CHANGE_TO, APPLY_ANDROID_MANIFEST_CHANGE_TO, APPLY_PROPERTY_RESOURCE_CHANGE_TO, APPLY_CPP_SOURCE_CHANGE_TO, APPLY_H_SOURCE_CHANGE_TO, BAZEL, BUCK, MAVEN
+            VERSIONS, TASKS, CLEANUP_TASKS, GRADLE_ARGS, RUN_USING, SYSTEM_PROPERTIES,
+            WARM_UP_COUNT, APPLY_ABI_CHANGE_TO, APPLY_NON_ABI_CHANGE_TO,
+            APPLY_ABI_CHANGE_TO_KOTLIN_SINGLE, APPLY_NON_ABI_CHANGE_TO_KOTLIN_SINGLE,
+            APPLY_ABI_CHANGE_TO_KOTLIN_MULTI, APPLY_NON_ABI_CHANGE_TO_KOTLIN_MULTI,
+            APPLY_ANDROID_RESOURCE_CHANGE_TO, APPLY_ANDROID_RESOURCE_VALUE_CHANGE_TO,
+            APPLY_ANDROID_MANIFEST_CHANGE_TO, APPLY_PROPERTY_RESOURCE_CHANGE_TO,
+            APPLY_CPP_SOURCE_CHANGE_TO, APPLY_H_SOURCE_CHANGE_TO, BAZEL, BUCK, MAVEN
     );
     private static final List<String> BAZEL_KEYS = Arrays.asList(TARGETS);
     private static final List<String> BUCK_KEYS = Arrays.asList(TARGETS, TYPE);
@@ -94,6 +104,10 @@ class ScenarioLoader {
             List<Supplier<BuildMutator>> mutators = new ArrayList<>();
             maybeAddMutator(scenario, scenarioName, settings.getProjectDir(), APPLY_ABI_CHANGE_TO, ApplyAbiChangeToJavaSourceFileMutator.class, mutators);
             maybeAddMutator(scenario, scenarioName, settings.getProjectDir(), APPLY_NON_ABI_CHANGE_TO, ApplyNonAbiChangeToJavaSourceFileMutator.class, mutators);
+            maybeAddMutator(scenario, scenarioName, settings.getProjectDir(), APPLY_ABI_CHANGE_TO_KOTLIN_SINGLE, ApplyAbiChangeToKotlinSingleModuleSourceFileMutator.class, mutators);
+            maybeAddMutator(scenario, scenarioName, settings.getProjectDir(), APPLY_NON_ABI_CHANGE_TO_KOTLIN_SINGLE, ApplyNonAbiChangeToKotlinSingleModuleSourceFileMutator.class, mutators);
+            maybeAddMutator(scenario, scenarioName, settings.getProjectDir(), APPLY_ABI_CHANGE_TO_KOTLIN_MULTI, ApplyAbiChangeToKotlinMultiModuleSourceFileMutator.class, mutators);
+            maybeAddMutator(scenario, scenarioName, settings.getProjectDir(), APPLY_NON_ABI_CHANGE_TO_KOTLIN_MULTI, ApplyNonAbiChangeToKotlinMultiModuleSourceFileMutator.class, mutators);
             maybeAddMutator(scenario, scenarioName, settings.getProjectDir(), APPLY_ANDROID_RESOURCE_CHANGE_TO, ApplyChangeToAndroidResourceFileMutator.class, mutators);
             maybeAddMutator(scenario, scenarioName, settings.getProjectDir(), APPLY_ANDROID_RESOURCE_VALUE_CHANGE_TO, ApplyValueChangeToAndroidResourceFileMutator.class, mutators);
             maybeAddMutator(scenario, scenarioName, settings.getProjectDir(), APPLY_ANDROID_MANIFEST_CHANGE_TO, ApplyChangeToAndroidManifestFileMutator.class, mutators);
